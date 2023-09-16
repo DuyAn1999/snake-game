@@ -61,6 +61,7 @@ export default function Home() {
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const [food, setFood] = useState<Food>();
+  const [score, setScore] = useState(0);
   const updateGameCallback = useRef<() => void>();
 
   // #region draw logic
@@ -151,6 +152,7 @@ export default function Home() {
     else{
       // eat food
       generateFood();
+      setScore(score+1);
     }
     parts = [nextHeadPosition].concat(parts);
     setSnake({
@@ -242,11 +244,21 @@ export default function Home() {
 
   const renderGame = () => {
     return (gameStarted && <div className='flex game-canvas'>
-      {!gameOver && (<canvas ref={canvasRef} width={800} height={800}>
-        </canvas>)}
+      {!gameOver && (<div className='flex'>
+        <div className='game-menu'>
+          <div>Score: {score}</div>
+        </div>
+        <canvas className='flex' ref={canvasRef} width={600} height={600}>
+        </canvas>
+        </div>)}
       {gameOver && (
-        <div>
+        <div className='flex items-center flex-col'>
           Game over
+          <div>Score: {score}</div>
+          <div className='gameover-buttons'>
+            <button className='action-button'>Retry</button>
+            <button className='action-button'>Back to home</button>
+          </div>
         </div>
       )}
     </div>);
@@ -259,14 +271,14 @@ export default function Home() {
   // #endregion
 
   return (
-    <main className="flex max-h-screen flex-col items-center justify-between p-24">
+    <main className="flex max-h-screen flex-col items-center justify-between p-1">
       {!gameStarted && (
       <div className='flex menu-screen'>
-        <div className='buttons'>
-          <button onClick={startGame}>Start</button>
-          <button>Settings</button>
-          <button>Helps</button>
-          <button>Leaderboard</button>
+        <div className='flex flex-col buttons'>
+          <button className='p-1 action-button' onClick={startGame}>Start</button>
+          <button className='p-1 action-button'>Settings</button>
+          <button className='p-1 action-button'>Helps</button>
+          <button className='p-1 action-button'>Leaderboard</button>
         </div>
       </div>)}
       {renderGame()}

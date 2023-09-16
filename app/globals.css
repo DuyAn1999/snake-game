@@ -25,3 +25,13 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.game-menu{
+  border: 1px solid white;
+  padding: 4px;
+}
+
+.action-button {
+  border: 1px solid white;
+  padding: 4px;
+}
